@@ -65,6 +65,20 @@ h1 {
   text-align: center;
 }
 
+.header-link {
+  color: white;
+  text-decoration: none;
+}
+
+.header-link:visited {
+  color: white;
+}
+
+.link:hover {
+  color: inherit;
+  cursor: pointer;
+}
+
 .link {
   width: fit-content;
   margin-bottom: 1.5rem;
@@ -76,6 +90,20 @@ h1 {
 }
 
 .link:hover {
+  color: inherit;
+  cursor: pointer;
+}
+
+.commit-link {
+  color: white;
+  font-size: 1.2rem;
+}
+
+.commit-link:visited {
+  color: white;
+}
+
+.commit-link:hover() {
   color: inherit;
   cursor: pointer;
 }
@@ -115,10 +143,15 @@ h1 {
   padding-bottom: 1rem;
 }
 
+.commit-container {
+  width: 800px;
+}
+
 .first {
   font-size: 2rem;
 }
 
 .last {
+  font-size: 1.2rem;
   padding-top: 2rem;
 }

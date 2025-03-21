@@ -12,7 +12,9 @@
 </head>
 
 <body>
-	<h1 class="name-header">Ben Allen G</h1>
+	<h1 class="name-header">
+		<a class="header-link" href="/" target="_self">Ben Allen G</a>
+	</h1>
 	<div class="ticker">
 		<hr />
 		<p class="marquee">
@@ -26,25 +28,35 @@
 	</div>
 	<div class="container">
 		<div class="dashboard">
-			<a class="link" target="_blank" href="/bitcoin.pdf">bitcoin pdf</a>
-			<a class="link" target="_blank" href="/gpg.txt">GPG public key</a>
+			<a class="link" target="_self" href="/bitcoin.pdf">bitcoin pdf</a>
+			<a class="link" target="_self" href="/gpg.txt">GPG public key</a>
 			<a class="link" href="mailto:benalleng@gmail.com">Contact</a>
-			<a class="link" target="_blank" href="https://github.com/benalleng">Github</a>
+			<a class="link" target="_self" href="https://github.com/benalleng">Github</a>
 		</div>
 		<div class="content-main">
 			<p class="paragraph-main">
 				<span class="paragraph-internal first">You've found me, Nice.</span>
 				<span class="paragraph-internal">I'm working on expanding the Privacy and fungibility of
-					bitcoin</span>
+					bitcoin.</span>
 				<span class="paragraph-internal">As well as exploring the securtiy vulernabilities
-					through program logic and chaos</span>
-				<span class="paragraph-internal">s</span>
-				<span class="paragraph-internal">ss</span>
-				<span class="paragraph-internal">sss</span>
-				<span class="paragraph-internal">ssss</span>
-				<span class="paragraph-internal">sssss</span>
-				<span class="paragraph-internal">ssssss</span>
-				<span id="paragraph-final" class="paragraph-internal last">Updated on </span>
+					through program logic and chaos.</span>
+				<span class="paragraph-internal">Currently working with th payjoin team to implement and
+					finalize the v2 protocol adding async payjoins allowing users to work together
+					in a less collaborative way.</span>
+				<span class="paragraph-internal">Bitcoin is only going to be as powerful and useful as
+					its weakest attribute to strengthening the parts of bitcoin perceived as lacking
+					is how I do my part for advancing bitcoin.</span>
+				<span class="paragraph-internal">I spend most of my time expanding the QA environment
+					for payjoin ensuring that it is a stable and secure protocol that users can
+					entrust to use reliably and safely to help break their common input
+					heuristics.</span>
+				<span class="paragraph-internal">I also work on many other open-source projects as well
+					so feel free to reach out with any ideas or projects!</span>
+			<p class="commit-container"><span id="paragraph-final" class="paragraph-internal last">Updated
+					on </span>
+				<a id="commit-link" class="commit-link" target="_self"
+					href="https://github.com/benalleng/benalleng.github.io"></a>
+			</p>
 			</p>
 		</div>
 	</div>
@@ -86,13 +98,19 @@
 
 			$.when($.getJSON(githubRepoPath)).done(
 				function (githubRepoData) {
+					var link = document.getElementById('commit-link');
+					link.href = githubRepoData.html_url
 					var commitDate = new Date(githubRepoData.commit.author.date).toLocaleDateString("en-US", {
 						month: "long",
 						day: "numeric",
 						year: "numeric"
 					});
 
-					$("#paragraph-final").append(commitDate);
+					var githubCommitDate = commitDate;
+					var githubCommitSHA = githubRepoData.sha.substring(0, 7);
+
+					$("#paragraph-final").append(githubCommitDate);
+					$("#commit-link").append(githubCommitSHA);
 				}
 			)
 		}
