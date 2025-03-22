@@ -18,8 +18,7 @@
 	</h1>
 	<div class="ticker">
 		<p class="marquee">
-			<span id="marquee"></span>
-			<span id="marquee2"></span>
+			<span id="marquee"></span><span id="marquee2"></span>
 		</p>
 	</div>
 	<div class="dashboard">
@@ -78,7 +77,7 @@
 
 				var blockTipHeightContent = "Current Block Height" + " - " + JSON.stringify(blockHeightData[0]) + " -\u00A0";
 
-				var recommendedFeeContent = "Minumum Fee" + " - " + JSON.stringify(recommendedFeeData[0].minimumFee) + " sats/vb" + " - " + "Fastest Fee" + " - " + JSON.stringify(recommendedFeeData[0].fastestFee) + " sats/vb" + " -";
+				var recommendedFeeContent = "Minumum Fee" + " - " + JSON.stringify(recommendedFeeData[0].minimumFee) + " sats/vb" + " - " + "Fastest Fee" + " - " + JSON.stringify(recommendedFeeData[0].fastestFee) + " sats/vb" + " -\u00A0";
 
 				var combinedTextContent = priceTextContent + difficultyTextContent + blockTipHeightContent + recommendedFeeContent;
 
