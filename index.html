@@ -18,7 +18,40 @@
 	</h1>
 	<div class="ticker">
 		<p class="marquee">
-			<span id="marquee"></span><span id="marquee2"></span>
+			<span id="marquee">
+				<span id="price_label" class="label">Bitcoin Price - $</span><span id="price"
+					class="value">0 - </span><span id="sats_per_dollar_label" class="label">Sats per
+					Dollar - </span><span id="sats_per_dollar" class="value">0 - </span><span
+					id="current_block_height_label" class="label">Current Block Height -
+				</span><span id="current_block_height" class="value">1 - </span><span
+					id="estimated_difficulty_change_label" class="label">Estimated Difficulty Change
+					-
+				</span><span id="estimated_difficulty_change" class="value">0% - </span><span
+					id="retarget_height_label" class="label">Retarget Height - </span><span
+					id="retarget_height" class="value">0 - </span><span
+					id="blocks_to_retarget_label" class="label">Blocks to Retarget - </span><span
+					id="blocks_to_retarget" class="value">0 - </span><span id="minimum_fee_label"
+					class="label">Minimum Fee - </span><span id="minimum_fee" class="value">1
+					sats/vb - </span><span id="fastest_fee_label" class="label">Fastest Fee -
+				</span><span id="fastest_fee" class="value">1
+					sats/vb - </span></span><span id="marquee2"><span id="price_label"
+					class="label">Bitcoin Price - $</span><span id="2price" class="value">0 -
+				</span><span id="sats_per_dollar_label" class="label">Sats per
+					Dollar - </span><span id="2sats_per_dollar" class="value">0 - </span><span
+					id="current_block_height_label" class="label">Current Block Height -
+				</span><span id="2current_block_height" class="value">1 - </span><span
+					id="estimated_difficulty_change_label" class="label">Estimated Difficulty Change
+					-
+				</span><span id="2estimated_difficulty_change" class="value">0% - </span><span
+					id="retarget_height_label" class="label">Retarget Height - </span><span
+					id="2retarget_height" class="value">0 - </span><span
+					id="blocks_to_retarget_label" class="label">Blocks to Retarget - </span><span
+					id="2blocks_to_retarget" class="value">0 - </span><span id="minimum_fee_label"
+					class="label">Minimum Fee - </span><span id="2minimum_fee" class="value">1
+					sats/vb - </span><span id="fastest_fee_label" class="label">Fastest Fee -
+				</span><span id="2fastest_fee" class="value">1
+					sats/vb - </span>
+			</span>
 		</p>
 	</div>
 	<div class="dashboard">
@@ -71,18 +104,32 @@
 				$.getJSON(blockTipHeightPath),
 				$.getJSON(recommendedFeePath),
 			).done(function (miningData, priceData, blockHeightData, recommendedFeeData) {
-				var priceTextContent = "Bitcoin Price" + " - " + "$" + JSON.stringify(priceData[0].USD) + " - " + "Sats per Dollar" + " - " + JSON.stringify(Math.round(100000000 / priceData[0].USD)) + " -\u00A0";
+				var priceTextContent = JSON.stringify(priceData[0].USD) + " -\u00A0";
+				var satsPerDollarTextContent = JSON.stringify(Math.round(100000000 / priceData[0].USD)) + " -\u00A0";
+				var estimatedDifficultyChangeTextContent = JSON.stringify(parseFloat(miningData[0].difficultyChange.toFixed(1))) + "%" + " -\u00A0";
+				var retargetHeightTextContent = JSON.stringify(miningData[0].nextRetargetHeight) + " -\u00A0";
+				var blocksToRetargetTextContent = JSON.stringify(miningData[0].remainingBlocks) + " -\u00A0";
+				var currentBlockHeightTextContent = JSON.stringify(blockHeightData[0]) + " -\u00A0";
+				var minimumFeeTextContent = JSON.stringify(recommendedFeeData[0].minimumFee) + " sats/vb" + " -\u00A0";
+				var fastestFeeTextContent = JSON.stringify(recommendedFeeData[0].fastestFee) + " sats/vb" + " -\u00A0";
 
-				var difficultyTextContent = "Estimated Difficulty Change" + " - " + JSON.stringify(parseFloat(miningData[0].difficultyChange.toFixed(1))) + "%" + " - " + "Retarget Height" + " - " + JSON.stringify(miningData[0].nextRetargetHeight) + " - " + "Blocks to Retarget" + " - " + JSON.stringify(miningData[0].remainingBlocks) + " -\u00A0";
+				$("#price").empty().append(priceTextContent);
+				$("#sats_per_dollar").empty().append(satsPerDollarTextContent);
+				$("#estimated_difficulty_change").empty().append(estimatedDifficultyChangeTextContent);
+				$("#retarget_height").empty().append(retargetHeightTextContent);
+				$("#blocks_to_retarget").empty().append(blocksToRetargetTextContent);
+				$("#current_block_height").empty().append(currentBlockHeightTextContent);
+				$("#minimum_fee").empty().append(minimumFeeTextContent);
+				$("#fastest_fee").empty().append(fastestFeeTextContent);
 
-				var blockTipHeightContent = "Current Block Height" + " - " + JSON.stringify(blockHeightData[0]) + " -\u00A0";
-
-				var recommendedFeeContent = "Minumum Fee" + " - " + JSON.stringify(recommendedFeeData[0].minimumFee) + " sats/vb" + " - " + "Fastest Fee" + " - " + JSON.stringify(recommendedFeeData[0].fastestFee) + " sats/vb" + " -\u00A0";
-
-				var combinedTextContent = priceTextContent + difficultyTextContent + blockTipHeightContent + recommendedFeeContent;
-
-				$("#marquee").empty().append(combinedTextContent);
-				$("#marquee2").empty().append(combinedTextContent);
+				$("#2price").empty().append(priceTextContent);
+				$("#2sats_per_dollar").empty().append(satsPerDollarTextContent);
+				$("#2estimated_difficulty_change").empty().append(estimatedDifficultyChangeTextContent);
+				$("#2retarget_height").empty().append(retargetHeightTextContent);
+				$("#2blocks_to_retarget").empty().append(blocksToRetargetTextContent);
+				$("#2current_block_height").empty().append(currentBlockHeightTextContent);
+				$("#2minimum_fee").empty().append(minimumFeeTextContent);
+				$("#2fastest_fee").empty().append(fastestFeeTextContent);
 			}).fail(function () {
 				console.error("Failed to fetch data from one of the APIs.");
 			});

@@ -37,26 +37,25 @@ h1 {
 }
 
 .ticker {
+  min-height: 24px;
   max-width: 100dvw;
   border-top: 1px solid white;
   border-bottom: 1px solid white;
+  overflow: hidden;
 }
 
 .marquee {
+  height: 100%;
+  width: 100%;
   margin: 0 auto;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.marquee span {
+.marquee #marquee,
+.marquee #marquee2 {
   display: inline-block;
-  transform: translateX(100%);
   animation: marquee 40s linear infinite;
-  overflow: hidden;
-}
-
-.marquee2 span {
-  animation-delay: 20s;
   overflow: hidden;
 }
 
