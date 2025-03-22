@@ -3,6 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/style.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,23 +17,18 @@
 		<a class="header-link" href="/" target="_self">Ben Allen G</a>
 	</h1>
 	<div class="ticker">
-		<hr />
 		<p class="marquee">
 			<span id="marquee"></span>
-		</p>
-		<p class="marquee marquee2">
 			<span id="marquee2"></span>
 		</p>
-		<br />
-		<hr />
+	</div>
+	<div class="dashboard">
+		<a class="link" target="_self" href="/bitcoin.pdf">bitcoin whitepaper</a>
+		<a class="link" target="_self" href="/gpg.txt">GPG public key</a>
+		<a class="link" href="mailto:benalleng@gmail.com">Contact</a>
+		<a class="link" target="_self" href="https://github.com/benalleng">Github</a>
 	</div>
 	<div class="container">
-		<div class="dashboard">
-			<a class="link" target="_self" href="/bitcoin.pdf">bitcoin pdf</a>
-			<a class="link" target="_self" href="/gpg.txt">GPG public key</a>
-			<a class="link" href="mailto:benalleng@gmail.com">Contact</a>
-			<a class="link" target="_self" href="https://github.com/benalleng">Github</a>
-		</div>
 		<div class="content-main">
 			<p class="paragraph-main">
 				<span class="paragraph-internal first">You've found me, Nice.</span>
@@ -52,11 +48,11 @@
 					heuristics.</span>
 				<span class="paragraph-internal">I also work on many other open-source projects as well
 					so feel free to reach out with any ideas or projects!</span>
-			<p class="commit-container"><span id="paragraph-final" class="paragraph-internal last">Updated
+			<div class="commit-container"><span id="paragraph-final" class="paragraph-internal last">Updated
 					on </span>
 				<a id="commit-link" class="commit-link" target="_self"
 					href="https://github.com/benalleng/benalleng.github.io"></a>
-			</p>
+			</div>
 			</p>
 		</div>
 	</div>
@@ -82,7 +78,7 @@
 
 				var blockTipHeightContent = "Current Block Height" + " - " + JSON.stringify(blockHeightData[0]) + " -\u00A0";
 
-				var recommendedFeeContent = "Minumum Fee" + " - " + JSON.stringify(recommendedFeeData[0].minimumFee) + " sats/vb" + " - " + "Fastest Fee" + " - " + JSON.stringify(recommendedFeeData[0].fastestFee) + " sats/vb" + " -\u00A0";
+				var recommendedFeeContent = "Minumum Fee" + " - " + JSON.stringify(recommendedFeeData[0].minimumFee) + " sats/vb" + " - " + "Fastest Fee" + " - " + JSON.stringify(recommendedFeeData[0].fastestFee) + " sats/vb" + " -";
 
 				var combinedTextContent = priceTextContent + difficultyTextContent + blockTipHeightContent + recommendedFeeContent;
 
