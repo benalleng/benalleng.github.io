@@ -6,8 +6,45 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="data:image/png;base64,iVBORw0KGgo=">
 	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<script src="https://cdn.jsdelivr.net/npm/umbrellajs"></script>
+	<script src="/js/ticker.js"></script>
+	<script src="/js/commit.js"></script>
 	<title>Benalleng</title>
 </head>
+
+<style>
+	@font-face {
+		font-family: 'Doto-Black';
+		font-display: swap;
+		font-optical-sizing: auto;
+		font-weight: 900;
+		font-style: normal;
+		font-variation-settings: "ROND" 0;
+		src: url('data:application/octet-stream;base64,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');
+	}
+
+	html {
+		margin: 0;
+		font-size: 62.5%;
+		overflow-x: hidden;
+		max-width: 100dvw;
+		background: black;
+	}
+
+	body {
+		box-sizing: border-box;
+		font-size: 1.6rem;
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+		height: 100dvh;
+		background: black;
+		color: white;
+		font-family: "Doto-Black", sans-serif;
+		display: flex;
+		flex-direction: column;
+		overflow-x: hidden;
+	}
+</style>
 
 <body>
 	<h1 class="name-header">
@@ -18,34 +55,43 @@
 			<span id="marquee">
 				<span id="price_label" class="label">Bitcoin Price - $</span><span id="price"
 					class="value">0 - </span><span id="sats_per_dollar_label" class="label">Sats per
-					Dollar - </span><span id="sats_per_dollar" class="value">0 - </span><span
-					id="current_block_height_label" class="label">Current Block Height -
+					Dollar - </span><span id="sats_per_dollar" class="value">0 -
+				</span><span id="current_block_height_label" class="label">Current Block Height
+					-
 				</span><span id="current_block_height" class="value">1 - </span><span
-					id="estimated_difficulty_change_label" class="label">Estimated Difficulty Change
+					id="estimated_difficulty_change_label" class="label">Estimated
+					Difficulty Change
 					-
 				</span><span id="estimated_difficulty_change" class="value">0% - </span><span
 					id="retarget_height_label" class="label">Retarget Height - </span><span
 					id="retarget_height" class="value">0 - </span><span
-					id="blocks_to_retarget_label" class="label">Blocks to Retarget - </span><span
-					id="blocks_to_retarget" class="value">0 - </span><span id="minimum_fee_label"
-					class="label">Minimum Fee - </span><span id="minimum_fee" class="value">1
-					sats/vb - </span><span id="fastest_fee_label" class="label">Fastest Fee -
+					id="blocks_to_retarget_label" class="label">Blocks to Retarget -
+				</span><span id="blocks_to_retarget" class="value">0 - </span><span
+					id="minimum_fee_label" class="label">Minimum Fee - </span><span id="minimum_fee"
+					class="value">1
+					sats/vb - </span><span id="fastest_fee_label" class="label">Fastest Fee
+					-
 				</span><span id="fastest_fee" class="value">1
 					sats/vb - </span></span><span id="marquee2"><span id="price_label"
-					class="label">Bitcoin Price - $</span><span id="price2" class="value">0 -
+					class="label">Bitcoin Price - $</span><span id="price2" class="value">0
+					-
 				</span><span id="sats_per_dollar_label" class="label">Sats per
-					Dollar - </span><span id="sats_per_dollar2" class="value">0 - </span><span
-					id="current_block_height_label" class="label">Current Block Height -
+					Dollar - </span><span id="sats_per_dollar2" class="value">0 -
+				</span><span id="current_block_height_label" class="label">Current Block Height
+					-
 				</span><span id="current_block_height2" class="value">1 - </span><span
-					id="estimated_difficulty_change_label" class="label">Estimated Difficulty Change
+					id="estimated_difficulty_change_label" class="label">Estimated
+					Difficulty Change
 					-
 				</span><span id="estimated_difficulty_change2" class="value">0% - </span><span
 					id="retarget_height_label" class="label">Retarget Height - </span><span
 					id="retarget_height2" class="value">0 - </span><span
-					id="blocks_to_retarget_label" class="label">Blocks to Retarget - </span><span
-					id="blocks_to_retarget2" class="value">0 - </span><span id="minimum_fee_label"
-					class="label">Minimum Fee - </span><span id="minimum_fee2" class="value">1
-					sats/vb - </span><span id="fastest_fee_label" class="label">Fastest Fee -
+					id="blocks_to_retarget_label" class="label">Blocks to Retarget -
+				</span><span id="blocks_to_retarget2" class="value">0 - </span><span
+					id="minimum_fee_label" class="label">Minimum Fee - </span><span
+					id="minimum_fee2" class="value">1
+					sats/vb - </span><span id="fastest_fee_label" class="label">Fastest Fee
+					-
 				</span><span id="fastest_fee2" class="value">1
 					sats/vb - </span>
 			</span>
@@ -61,21 +107,30 @@
 		<div class="content-main">
 			<p class="paragraph-main">
 				<span class="paragraph-internal first">You've found me, Nice.</span>
-				<span class="paragraph-internal">I'm working on expanding the Privacy and fungibility of
+				<span class="paragraph-internal">I'm working on expanding the Privacy and
+					fungibility of
 					bitcoin.</span>
-				<span class="paragraph-internal">As well as exploring the securtiy vulernabilities
+				<span class="paragraph-internal">As well as exploring the securtiy
+					vulernabilities
 					through program logic and chaos.</span>
-				<span class="paragraph-internal">Currently working with th payjoin team to implement and
-					finalize the v2 protocol adding async payjoins allowing users to work together
+				<span class="paragraph-internal">Currently working with th payjoin team to
+					implement and
+					finalize the v2 protocol adding async payjoins allowing users to work
+					together
 					in a less collaborative way.</span>
-				<span class="paragraph-internal">Bitcoin is only going to be as powerful and useful as
-					its weakest attribute to strengthening the parts of bitcoin perceived as lacking
+				<span class="paragraph-internal">Bitcoin is only going to be as powerful and
+					useful as
+					its weakest attribute to strengthening the parts of bitcoin perceived as
+					lacking
 					is how I do my part for advancing bitcoin.</span>
-				<span class="paragraph-internal">I spend most of my time expanding the QA environment
-					for payjoin ensuring that it is a stable and secure protocol that users can
+				<span class="paragraph-internal">I spend most of my time expanding the QA
+					environment
+					for payjoin ensuring that it is a stable and secure protocol that users
+					can
 					entrust to use reliably and safely to help break their common input
 					heuristics.</span>
-				<span class="paragraph-internal">I also work on many other open-source projects as well
+				<span class="paragraph-internal">I also work on many other open-source projects
+					as well
 					so feel free to reach out with any ideas or projects!</span>
 			<div class="commit-container"><span id="paragraph-final" class="paragraph-internal last">Created
 					on Mar 21, 2025</span>
@@ -92,9 +147,5 @@
 		</a>
 	</footer>
 </body>
-
-<script src="https://cdn.jsdelivr.net/npm/umbrellajs"></script>
-<script src="/js/ticker.js"></script>
-<script src="/js/commit.js"></script>
 
 </html>
