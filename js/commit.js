@@ -19,7 +19,7 @@ u(document).on('DOMContentLoaded', function() {
 				.replace(`<span id="paragraph-final" class="paragraph-internal last">Updated on ${githubCommitDate}</span>`);
 			u("#commit-link")
 				.replace(`<a id="commit-link" class="commit-link" target="_self"
-					href="https://github.com/benalleng/benalleng.github.io">${githubCommitSHA}</a>`);
+					href="https://github.com/benalleng/benalleng.github.io/commit/${githubRepoData.sha}">${githubCommitSHA}</a>`);
 		}).catch(err => console.error("Failed to fetch commit data.", err)
 		);
 	}
