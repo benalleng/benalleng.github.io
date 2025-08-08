@@ -30,7 +30,7 @@ u(document).on('DOMContentLoaded', function() {
 				updateField("#sats_per_dollar", satsPerDollarTextContent);
 				updateField("#estimated_difficulty_change", estimatedDifficultyChangeTextContent);
 				updateField("#retarget_height", retargetHeightTextContent);
-				updateField("#block_to_retarget", blocksToRetargetTextContent);
+				updateField("#blocks_to_retarget", blocksToRetargetTextContent);
 				updateField("#current_block_height", currentBlockHeightTextContent);
 				updateField("#minimum_fee", minimumFeeTextContent);
 				updateField("#fastest_fee", fastestFeeTextContent);
@@ -38,7 +38,7 @@ u(document).on('DOMContentLoaded', function() {
 				updateField("#sats_per_dollar2", satsPerDollarTextContent);
 				updateField("#estimated_difficulty_change2", estimatedDifficultyChangeTextContent);
 				updateField("#retarget_height2", retargetHeightTextContent);
-				updateField("#block_to_retarget2", blocksToRetargetTextContent);
+				updateField("#blocks_to_retarget2", blocksToRetargetTextContent);
 				updateField("#current_block_height2", currentBlockHeightTextContent);
 				updateField("#minimum_fee2", minimumFeeTextContent);
 				updateField("#fastest_fee2", fastestFeeTextContent);
