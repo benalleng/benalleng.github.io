@@ -4,15 +4,16 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="/style.css" />
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <script>
+          /*to prevent Firefox FOUC, this must be here*/
+          let FF_FOUC_FIX;
+        </script>
 	<title>Benalleng</title>
 </head>
 
 <body>
+	<script>0</script>
 	<h1 class="name-header">
 		<a class="header-link" href="/" target="_self">Ben Allen G</a>
 	</h1>
@@ -35,28 +36,28 @@
 					sats/vb - </span><span id="fastest_fee_label" class="label">Fastest Fee -
 				</span><span id="fastest_fee" class="value">1
 					sats/vb - </span></span><span id="marquee2"><span id="price_label"
-					class="label">Bitcoin Price - $</span><span id="2price" class="value">0 -
+					class="label">Bitcoin Price - $</span><span id="price2" class="value">0 -
 				</span><span id="sats_per_dollar_label" class="label">Sats per
-					Dollar - </span><span id="2sats_per_dollar" class="value">0 - </span><span
+					Dollar - </span><span id="sats_per_dollar2" class="value">0 - </span><span
 					id="current_block_height_label" class="label">Current Block Height -
-				</span><span id="2current_block_height" class="value">1 - </span><span
+				</span><span id="current_block_height2" class="value">1 - </span><span
 					id="estimated_difficulty_change_label" class="label">Estimated Difficulty Change
 					-
-				</span><span id="2estimated_difficulty_change" class="value">0% - </span><span
+				</span><span id="estimated_difficulty_change2" class="value">0% - </span><span
 					id="retarget_height_label" class="label">Retarget Height - </span><span
-					id="2retarget_height" class="value">0 - </span><span
+					id="retarget_height2" class="value">0 - </span><span
 					id="blocks_to_retarget_label" class="label">Blocks to Retarget - </span><span
-					id="2blocks_to_retarget" class="value">0 - </span><span id="minimum_fee_label"
-					class="label">Minimum Fee - </span><span id="2minimum_fee" class="value">1
+					id="blocks_to_retarget2" class="value">0 - </span><span id="minimum_fee_label"
+					class="label">Minimum Fee - </span><span id="minimum_fee2" class="value">1
 					sats/vb - </span><span id="fastest_fee_label" class="label">Fastest Fee -
-				</span><span id="2fastest_fee" class="value">1
+				</span><span id="fastest_fee2" class="value">1
 					sats/vb - </span>
 			</span>
 		</p>
 	</div>
 	<div class="dashboard">
-		<a class="link" target="_self" href="/bitcoin.pdf">bitcoin whitepaper</a>
-		<a class="link" target="_self" href="/gpg.txt">GPG public key</a>
+		<a class="link" target="_self" href="/content/bitcoin.pdf">bitcoin whitepaper</a>
+		<a class="link" target="_self" href="/content/gpg.txt">GPG public key</a>
 		<a class="link" href="mailto:benalleng@gmail.com">Contact</a>
 		<a class="link" target="_self" href="https://github.com/benalleng">Github</a>
 	</div>
@@ -80,10 +81,9 @@
 					heuristics.</span>
 				<span class="paragraph-internal">I also work on many other open-source projects as well
 					so feel free to reach out with any ideas or projects!</span>
-			<div class="commit-container"><span id="paragraph-final" class="paragraph-internal last">Updated
-					on </span>
+				<div class="commit-container"><span id="paragraph-final" class="paragraph-internal last">Created on Mar 21, 2025</span>
 				<a id="commit-link" class="commit-link" target="_self"
-					href="https://github.com/benalleng/benalleng.github.io"></a>
+					href="https://github.com/benalleng/benalleng.github.io">afa3891</a>
 			</div>
 			</p>
 		</div>
@@ -91,82 +91,13 @@
 	<footer class="footer">
 		<a id="tor" class="tor-link" target="_blank"
 			href="http://zlpqrgka4kybfycelfdayxloixbqzfptukhb6a525wiewacoeu6v2vqd.onion">
-			<img src="./tor.svg" />
+			<img src="/assets/tor.svg" />
 		</a>
 	</footer>
 </body>
 
-<script>
-	$(document).ready(function () {
-		function updateData() {
-			var miningAdjutmentPath = "https://mempool.space/api/v1/difficulty-adjustment";
-			var pricePath = "https://mempool.space/api/v1/prices";
-			let blockTipHeightPath = "https://mempool.space/api/blocks/tip/height";
-			let recommendedFeePath = "https://mempool.space/api/v1/fees/recommended";
-
-			$.when(
-				$.getJSON(miningAdjutmentPath),
-				$.getJSON(pricePath),
-				$.getJSON(blockTipHeightPath),
-				$.getJSON(recommendedFeePath),
-			).done(function (miningData, priceData, blockHeightData, recommendedFeeData) {
-				var priceTextContent = JSON.stringify(priceData[0].USD) + " -\u00A0";
-				var satsPerDollarTextContent = JSON.stringify(Math.round(100000000 / priceData[0].USD)) + " -\u00A0";
-				var estimatedDifficultyChangeTextContent = JSON.stringify(parseFloat(miningData[0].difficultyChange.toFixed(1))) + "%" + " -\u00A0";
-				var retargetHeightTextContent = JSON.stringify(miningData[0].nextRetargetHeight) + " -\u00A0";
-				var blocksToRetargetTextContent = JSON.stringify(miningData[0].remainingBlocks) + " -\u00A0";
-				var currentBlockHeightTextContent = JSON.stringify(blockHeightData[0]) + " -\u00A0";
-				var minimumFeeTextContent = JSON.stringify(recommendedFeeData[0].minimumFee) + " sats/vb" + " -\u00A0";
-				var fastestFeeTextContent = JSON.stringify(recommendedFeeData[0].fastestFee) + " sats/vb" + " -\u00A0";
-
-				$("#price").empty().append(priceTextContent);
-				$("#sats_per_dollar").empty().append(satsPerDollarTextContent);
-				$("#estimated_difficulty_change").empty().append(estimatedDifficultyChangeTextContent);
-				$("#retarget_height").empty().append(retargetHeightTextContent);
-				$("#blocks_to_retarget").empty().append(blocksToRetargetTextContent);
-				$("#current_block_height").empty().append(currentBlockHeightTextContent);
-				$("#minimum_fee").empty().append(minimumFeeTextContent);
-				$("#fastest_fee").empty().append(fastestFeeTextContent);
-
-				$("#2price").empty().append(priceTextContent);
-				$("#2sats_per_dollar").empty().append(satsPerDollarTextContent);
-				$("#2estimated_difficulty_change").empty().append(estimatedDifficultyChangeTextContent);
-				$("#2retarget_height").empty().append(retargetHeightTextContent);
-				$("#2blocks_to_retarget").empty().append(blocksToRetargetTextContent);
-				$("#2current_block_height").empty().append(currentBlockHeightTextContent);
-				$("#2minimum_fee").empty().append(minimumFeeTextContent);
-				$("#2fastest_fee").empty().append(fastestFeeTextContent);
-			}).fail(function () {
-				console.error("Failed to fetch data from one of the APIs.");
-			});
-		}
-
-		function fetchCommit() {
-			var githubRepoPath = "https://api.github.com/repos/benalleng/benalleng.github.io/commits/master"
-
-			$.when($.getJSON(githubRepoPath)).done(
-				function (githubRepoData) {
-					var link = document.getElementById('commit-link');
-					link.href = githubRepoData.html_url
-					var commitDate = new Date(githubRepoData.commit.author.date).toLocaleDateString("en-US", {
-						month: "long",
-						day: "numeric",
-						year: "numeric"
-					});
-
-					var githubCommitDate = commitDate;
-					var githubCommitSHA = githubRepoData.sha.substring(0, 7);
-
-					$("#paragraph-final").append(githubCommitDate);
-					$("#commit-link").append(githubCommitSHA);
-				}
-			)
-		}
-
-		fetchCommit();
-		updateData();
-		setInterval(updateData, 30000);
-	});
-</script>
+<script src="https://cdn.jsdelivr.net/npm/umbrellajs"></script>
+<script src="/js/ticker.js"></script>
+<script src="/js/commit.js"></script>
 
 </html>
