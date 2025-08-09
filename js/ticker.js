@@ -24,7 +24,7 @@ u(document).on('DOMContentLoaded', function() {
 
 				setTimeout(() => {
 					node.classList.remove('up', 'down', 'changed', 'unchanged');
-				}, 800);
+				}, 2000);
 			}
 		});
 	}
@@ -42,14 +42,22 @@ u(document).on('DOMContentLoaded', function() {
 			fetch(recommendedFeePath).then(r => r.json())
 		])
 			.then(([miningData, priceData, blockHeightData, recommendedFeeData]) => {
-				const priceTextContent = `${priceData.USD}`;
-				const satsPerDollarTextContent = `${Math.round(100000000 / priceData.USD)}`;
-				const estimatedDifficultyChangeTextContent = `${parseFloat(miningData.difficultyChange.toFixed(1))}%`;
-				const retargetHeightTextContent = `${miningData.nextRetargetHeight}`;
-				const blocksToRetargetTextContent = `${miningData.remainingBlocks}`;
-				const currentBlockHeightTextContent = `${blockHeightData}`;
-				const minimumFeeTextContent = `${recommendedFeeData.minimumFee} sats/vb`;
-				const fastestFeeTextContent = `${recommendedFeeData.fastestFee} sats/vb`;
+				const priceTextContent =
+					`${priceData.USD}`;
+				const satsPerDollarTextContent =
+					`${Math.round(100000000 / priceData.USD)}`;
+				const estimatedDifficultyChangeTextContent =
+					`${Number(miningData.difficultyChange).toFixed(1)}%`;
+				const retargetHeightTextContent =
+					`${miningData.nextRetargetHeight}`;
+				const blocksToRetargetTextContent =
+					`${miningData.remainingBlocks}`;
+				const currentBlockHeightTextContent =
+					`${blockHeightData}`;
+				const minimumFeeTextContent =
+					`${recommendedFeeData.minimumFee} sats/vb`;
+				const fastestFeeTextContent =
+					`${recommendedFeeData.fastestFee} sats/vb`;
 
 				updateField("#price", priceTextContent);
 				updateField("#sats_per_dollar", satsPerDollarTextContent);
