@@ -1,5 +1,34 @@
 u(document).on('DOMContentLoaded', function() {
 
+	function updateField(selector, newText) {
+		u(selector).each(node => {
+			const oldText = node.textContent.trim();
+
+			if (oldText !== newText.trim()) {
+				const oldNum = parseFloat(oldText) || 0;
+				const newNum = parseFloat(newText) || 0;
+
+				node.textContent = newText;
+
+				node.classList.remove('up', 'down', 'changed');
+
+				if (!isNaN(newNum) && !isNaN(oldNum)) {
+					if (newNum > oldNum) {
+						node.classList.add('up', 'changed');
+					} else if (newNum < oldNum) {
+						node.classList.add('down', 'changed');
+					} else if (newNum === oldNum) {
+						node.classList.add('unchanged');
+					}
+				}
+
+				setTimeout(() => {
+					node.classList.remove('up', 'down', 'changed', 'unchanged');
+				}, 800);
+			}
+		});
+	}
+
 	function updateData() {
 		const miningAdjustmentPath = "https://mempool.space/api/v1/difficulty-adjustment";
 		const pricePath = "https://mempool.space/api/v1/prices";
@@ -13,18 +42,14 @@ u(document).on('DOMContentLoaded', function() {
 			fetch(recommendedFeePath).then(r => r.json())
 		])
 			.then(([miningData, priceData, blockHeightData, recommendedFeeData]) => {
-				const priceTextContent = `${priceData.USD} -\u00A0`;
-				const satsPerDollarTextContent = `${Math.round(100000000 / priceData.USD)} -\u00A0`;
-				const estimatedDifficultyChangeTextContent = `${parseFloat(miningData.difficultyChange.toFixed(1))}% -\u00A0`;
-				const retargetHeightTextContent = `${miningData.nextRetargetHeight} -\u00A0`;
-				const blocksToRetargetTextContent = `${miningData.remainingBlocks} -\u00A0`;
-				const currentBlockHeightTextContent = `${blockHeightData} -\u00A0`;
-				const minimumFeeTextContent = `${recommendedFeeData.minimumFee} sats/vb -\u00A0`;
-				const fastestFeeTextContent = `${recommendedFeeData.fastestFee} sats/vb -\u00A0`;
-
-				const updateField = (selector, text) => {
-					u(selector).html(text);
-				};
+				const priceTextContent = `${priceData.USD}`;
+				const satsPerDollarTextContent = `${Math.round(100000000 / priceData.USD)}`;
+				const estimatedDifficultyChangeTextContent = `${parseFloat(miningData.difficultyChange.toFixed(1))}%`;
+				const retargetHeightTextContent = `${miningData.nextRetargetHeight}`;
+				const blocksToRetargetTextContent = `${miningData.remainingBlocks}`;
+				const currentBlockHeightTextContent = `${blockHeightData}`;
+				const minimumFeeTextContent = `${recommendedFeeData.minimumFee} sats/vb`;
+				const fastestFeeTextContent = `${recommendedFeeData.fastestFee} sats/vb`;
 
 				updateField("#price", priceTextContent);
 				updateField("#sats_per_dollar", satsPerDollarTextContent);
