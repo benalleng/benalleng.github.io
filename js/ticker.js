@@ -34,14 +34,16 @@ u(document).on('DOMContentLoaded', function() {
 		const pricePath = "https://mempool.space/api/v1/prices";
 		const blockTipHeightPath = "https://mempool.space/api/blocks/tip/height";
 		const recommendedFeePath = "https://mempool.space/api/v1/fees/recommended";
+		const mempoolPath = "https://mempool.space/api/mempool";
 
 		Promise.all([
 			fetch(miningAdjustmentPath).then(r => r.json()),
 			fetch(pricePath).then(r => r.json()),
 			fetch(blockTipHeightPath).then(r => r.json()),
-			fetch(recommendedFeePath).then(r => r.json())
+			fetch(recommendedFeePath).then(r => r.json()),
+			fetch(mempoolPath).then(r => r.json())
 		])
-			.then(([miningData, priceData, blockHeightData, recommendedFeeData]) => {
+			.then(([miningData, priceData, blockHeightData, recommendedFeeData, mempoolData]) => {
 				const priceTextContent =
 					`${priceData.USD}`;
 				const satsPerDollarTextContent =
@@ -58,6 +60,12 @@ u(document).on('DOMContentLoaded', function() {
 					`${recommendedFeeData.minimumFee} sats/vb`;
 				const fastestFeeTextContent =
 					`${recommendedFeeData.fastestFee} sats/vb`;
+				const mempoolTxCountTextContent =
+					`${Number(mempoolData.count)}`;
+				const mempoolExpectedBlocksTextContent =
+					`${Math.round(mempoolData.vsize / 1000000)}`;
+				const mempoolFeesTextContent =
+					`${mempoolData.total_fee} sats`;
 
 				updateField("#price", priceTextContent);
 				updateField("#sats_per_dollar", satsPerDollarTextContent);
@@ -67,6 +75,9 @@ u(document).on('DOMContentLoaded', function() {
 				updateField("#current_block_height", currentBlockHeightTextContent);
 				updateField("#minimum_fee", minimumFeeTextContent);
 				updateField("#fastest_fee", fastestFeeTextContent);
+				updateField("#mempool_tx_count", mempoolTxCountTextContent);
+				updateField("#mempool_expected_blocks", mempoolExpectedBlocksTextContent);
+				updateField("#mempool_fees", mempoolFeesTextContent);
 				updateField("#price2", priceTextContent);
 				updateField("#sats_per_dollar2", satsPerDollarTextContent);
 				updateField("#estimated_difficulty_change2", estimatedDifficultyChangeTextContent);
@@ -75,6 +86,9 @@ u(document).on('DOMContentLoaded', function() {
 				updateField("#current_block_height2", currentBlockHeightTextContent);
 				updateField("#minimum_fee2", minimumFeeTextContent);
 				updateField("#fastest_fee2", fastestFeeTextContent);
+				updateField("#mempool_tx_count2", mempoolTxCountTextContent);
+				updateField("#mempool_expected_blocks2", mempoolExpectedBlocksTextContent);
+				updateField("#mempool_fees2", mempoolFeesTextContent);
 			})
 			.catch(err => {
 				console.error("Failed to fetch data from an API.", err);
@@ -82,5 +96,5 @@ u(document).on('DOMContentLoaded', function() {
 	}
 
 	updateData();
-	setInterval(updateData, 60000);
+	setInterval(updateData, 10000);
 });
