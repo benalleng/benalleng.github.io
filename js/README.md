@@ -34,6 +34,10 @@ printf '#!/bin/sh\nnode build.js --check\n' > .git/hooks/pre-commit && chmod +x 
   placed where the first one was (or before `</body>` if there are none).
   Don't hand-write inline scripts in `index.html`; edit the files here instead.
   Tags with attributes (`<script src=...>`, `<script type=...>`) are left alone.
+  `<script id="marquee-sync">` in `<head>` relies on this: it must run before
+  first paint, so it lives in `index.html` rather than here. It starts the
+  marquee at a wall-clock offset so refreshes don't reset its position; its
+  `4e4` must match the 40s `animation` duration in the CSS.
 - Trailing whitespace at the end of each file is trimmed.
 - A file containing `</script` is rejected, since it would break the page.
 - The build prints the raw and gzipped page size and warns above 14600 bytes
