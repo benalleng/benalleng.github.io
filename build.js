@@ -8,10 +8,13 @@
 //
 //   node build.js          rewrite index.html
 //   node build.js --check  exit 1 if index.html is out of date (for pre-commit hooks)
+//   node build.js --stamp  also write the HEAD commit date and sha into the page
+//                          (deploy only; see .github/workflows/pages.yml)
 
 const fs = require("fs");
 const path = require("path");
 const zlib = require("zlib");
+const { execFileSync } = require("child_process");
 
 const ROOT = __dirname;
 const HTML = path.join(ROOT, "index.html");
@@ -20,6 +23,11 @@ const JS_DIR = "js";
 const SIZE_BUDGET = 14600;
 
 const check = process.argv.includes("--check");
+const stamp = process.argv.includes("--stamp");
+if (check && stamp) {
+	console.error("--check and --stamp can't be combined.");
+	process.exit(1);
+}
 const html = fs.readFileSync(HTML, "utf8");
 
 const isLib = (f) => f.endsWith(".min.js");
@@ -46,8 +54,33 @@ if (at === -1) {
 	console.error("No inline <script> blocks or </body> found in index.html.");
 	process.exit(1);
 }
-const built = stripped.slice(0, at) + blocks + stripped.slice(at);
+let built = stripped.slice(0, at) + blocks + stripped.slice(at);
 console.log(`Inlining: ${scripts.join(", ")}`);
+
+if (stamp) {
+	const [sha, isoDate] = execFileSync("git", ["log", "-1", "--format=%H%n%aI"], { cwd: ROOT, encoding: "utf8" })
+		.trim().split("\n");
+	const date = new Date(isoDate).toLocaleDateString("en-US", {
+		month: "long",
+		day: "numeric",
+		year: "numeric",
+		timeZone: "UTC"
+	});
+
+	const replaceOnce = (re, fn, what) => {
+		if (!re.test(built)) {
+			console.error(`Couldn't find ${what} in index.html to stamp.`);
+			process.exit(1);
+		}
+		built = built.replace(re, fn);
+	};
+	replaceOnce(/(<span id="paragraph-final"[^>]*>)[\s\S]*?(<\/span>)/,
+		(_, open, close) => `${open}Updated on ${date}${close}`, "#paragraph-final");
+	replaceOnce(/(<a id="commit-link"[^>]*?href=")[^"]*("[^>]*>)[\s\S]*?(<\/a>)/,
+		(_, open, mid, close) => `${open}https://github.com/benalleng/benalleng.github.io/commit/${sha}${mid}${sha.substring(0, 7)}${close}`,
+		"#commit-link");
+	console.log(`Stamped: ${sha.substring(0, 7)}, ${date}`);
+}
 
 const raw = Buffer.byteLength(built);
 const gz = zlib.gzipSync(built, { level: 9 }).length;

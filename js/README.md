@@ -14,6 +14,9 @@ node build.js          # rewrite index.html from js/
 node build.js --check  # exit 1 if index.html is out of date or over budget
 ```
 
+On deploy, `.github/workflows/pages.yml` runs `--check`, then `--stamp` to
+write the commit date and sha into the page. Don't commit stamped output.
+
 Optional pre-commit hook:
 
 ```sh
